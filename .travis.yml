@@ -14,4 +14,12 @@ after_success:
   - docker build -t rish_goel/multi-nginx ./nginx
   - docker build -t rish_goel/multi-server ./server
   - docker build -t rish_goel/multi-worker ./worker
+  # Log in to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  
+  # Take those images and push them to docker hub
+  - docker push rish_goel/multi-client
+  - docker push rish_goel/multi-nginx
+  - docker push rish_goel/multi-server
+  - docker push rish_goel/multi-worker
 
