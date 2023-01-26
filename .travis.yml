@@ -1,0 +1,17 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t rish_goel/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true rish_goel/react-test npm test
+
+after_success:
+  - docker build -t rish_goel/multi-client ./client
+  - docker build -t rish_goel/multi-nginx ./nginx
+  - docker build -t rish_goel/multi-server ./server
+  - docker build -t rish_goel/multi-worker ./worker
+
